@@ -7,7 +7,7 @@ import platform
 
 @register_node
 class FileIteratorNode(GeneratorNode):
-    NAME = "文件遍历器"
+    NAME ="文件遍历器"
     DESCRIPTION = "遍历指定目录下的文件，支持通配符匹配"
     INPUTS = {
         "app_dir": {
@@ -71,7 +71,7 @@ class FileIteratorNode(GeneratorNode):
             def match_file(filename: str, patterns: list) -> bool:
                 """根据操作系统判断文件是否匹配模式"""
                 if not is_case_sensitive:
-                    filename = filename.lower()
+                    fileNAME =filename.lower()
                 return any(fnmatch.fnmatch(filename, pattern) for pattern in patterns)
 
             # 遍历目录
@@ -91,7 +91,7 @@ class FileIteratorNode(GeneratorNode):
                     log.info(f"总共找到 {total_files} 个文件")
                     for file_path in glob.glob(pattern_path, recursive=False):
                         if os.path.isfile(file_path):
-                            filename = os.path.basename(file_path)
+                            fileNAME =os.path.basename(file_path)
                             if match_file(filename, patterns):
                                 log.debug(f"找到匹配文件: {file_path}")
                                 yield file_path  # 直接yield文件路径字符串
