@@ -7,7 +7,7 @@ import platform
 
 @register_node
 class FileIteratorNode(GeneratorNode):
-    NAME ="文件遍历器"
+    NAME ="文件遍历器a"
     DESCRIPTION = "遍历指定目录下的文件，支持通配符匹配"
     INPUTS = {
         "app_dir": {
