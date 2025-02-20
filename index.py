@@ -52,26 +52,25 @@ class FileIteratorNode(GeneratorNode):
             # 根据操作系统决定是否区分大小写
             is_case_sensitive = platform.system() != 'Windows'
             if not is_case_sensitive:
-                # Windows下转换为小写进行匹配
                 patterns = [p.lower() for p in patterns]
             
             if not os.path.exists(directory):
-                log.error(f"目录不存在: {directory}")
+                log.error(f"Directory does not exist: {directory}")
                 return
                 
             if not os.path.isdir(directory):
-                log.error(f"路径不是目录: {directory}")
+                log.error(f"Path is not a directory: {directory}")
                 return
 
-            log.info(f"开始遍历目录: {directory}")
-            log.debug(f"通配符模式: {patterns}")
-            log.debug(f"是否包含子目录: {recursive}")
-            log.debug(f"是否区分大小写: {is_case_sensitive}")
+            log.info(f"Start scanning directory: {directory}")
+            log.debug(f"Wildcard patterns: {patterns}")
+            log.debug(f"Include subdirectories: {recursive}")
+            log.debug(f"Case sensitive: {is_case_sensitive}")
 
             def match_file(filename: str, patterns: list) -> bool:
                 """根据操作系统判断文件是否匹配模式"""
                 if not is_case_sensitive:
-                    fileNAME =filename.lower()
+                    filename = filename.lower()
                 return any(fnmatch.fnmatch(filename, pattern) for pattern in patterns)
 
             # 遍历目录
@@ -79,23 +78,21 @@ class FileIteratorNode(GeneratorNode):
                 for root, _, files in os.walk(directory):
                     for file in files:
                         file_path = os.path.join(root, file)
-                        # 检查是否匹配任一模式
                         if match_file(file, patterns):
-                            log.debug(f"找到匹配文件: {file_path}")
-                            yield file_path  # 直接yield文件路径字符串
+                            log.debug(f"Found matching file: {file_path}")
+                            yield file_path
             else:
-                # 不递归遍历，只查找当前目录
                 for pattern in patterns:
                     pattern_path = os.path.join(directory, pattern)
                     total_files = len(glob.glob(pattern_path, recursive=False))
-                    log.info(f"总共找到 {total_files} 个文件")
+                    log.info(f"Found {total_files} files in total")
                     for file_path in glob.glob(pattern_path, recursive=False):
                         if os.path.isfile(file_path):
-                            fileNAME =os.path.basename(file_path)
+                            filename = os.path.basename(file_path)
                             if match_file(filename, patterns):
-                                log.debug(f"找到匹配文件: {file_path}")
-                                yield file_path  # 直接yield文件路径字符串
+                                log.debug(f"Found matching file: {file_path}")
+                                yield file_path
 
         except Exception as e:
-            log.error(f"文件遍历失败: {str(e)}")
+            log.error(f"File scanning failed: {str(e)}")
             return
