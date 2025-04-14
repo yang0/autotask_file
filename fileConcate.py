@@ -1,7 +1,7 @@
 try:
     from autotask.nodes import Node, register_node
 except ImportError:
-    from ..stub import Node, register_node
+    from .stub import Node, register_node
 
 from typing import Dict, Any
 import os

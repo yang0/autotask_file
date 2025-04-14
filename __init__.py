@@ -1,6 +1,12 @@
-from .index import *
-from .nodes.fileConcate import *
-from .nodes.fileList import *
+from .fileConcate import *
+from .fileList import *
+from .readTextFile import *
+from .writeTextFile import *
+from .fileDelete import *
+from .fileInfo import *
+from .copyFile import *
+
+
 
 
 VERSION = "1.0.17"
