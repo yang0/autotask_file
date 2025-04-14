@@ -22,7 +22,8 @@ class WriteTextFileNode(Node):
             "label": "File Name",
             "description": "Name/path of the file to write",
             "type": "STRING",
-            "required": True
+            "required": True,
+            "widget": "FILE"
         },
         "overwrite": {
             "label": "Overwrite",
@@ -35,7 +36,8 @@ class WriteTextFileNode(Node):
             "label": "Base Directory",
             "description": "Base directory path (optional)",
             "type": "STRING",
-            "required": False
+            "required": False,
+            "widget": "DIR"
         }
     }
     OUTPUTS = {

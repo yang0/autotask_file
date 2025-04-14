@@ -16,7 +16,8 @@ class ReadTextFileNode(Node):
             "label": "File Path",
             "description": "Path to the text file to read",
             "type": "STRING",
-            "required": True
+            "required": True,
+            "widget": "FILE"
         },
         "encoding": {
             "label": "File Encoding",

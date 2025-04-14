@@ -17,13 +17,15 @@ class FileInfoNode(Node):
             "label": "File Path",
             "description": "Path to the file or directory",
             "type": "STRING",
-            "required": True
+            "required": True,
+            "widget": "FILE"
         },
         "base_dir": {
             "label": "Base Directory",
             "description": "Base directory path (optional)",
             "type": "STRING",
-            "required": False
+            "required": False,
+            "widget": "DIR"
         }
     }
     OUTPUTS = {

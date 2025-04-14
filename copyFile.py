@@ -10,20 +10,22 @@ except ImportError:
 @register_node
 class CopyFileNode(Node):
     NAME = "Copy File"
-    DESCRIPTION = "Copy a file or directory to target location with optional cut operation"
+    DESCRIPTION = "Copy a file or directory to target directory with optional cut operation"
     
     INPUTS = {
         "source_path": {
             "label": "Source Path",
             "description": "Path to the source file or directory",
             "type": "STRING",
-            "required": True
+            "required": True,
+            "widget": "FILE"
         },
-        "target_path": {
-            "label": "Target Path",
-            "description": "Path where the file/directory will be copied to",
+        "target_dir": {
+            "label": "Target Directory",
+            "description": "Directory where the file/directory will be copied to",
             "type": "STRING", 
-            "required": True
+            "required": True,
+            "widget": "DIR"
         },
         "is_cut": {
             "label": "Cut Operation",
@@ -47,10 +49,10 @@ class CopyFileNode(Node):
     async def execute(self, node_inputs: Dict[str, Any], workflow_logger) -> Dict[str, Any]:
         try:
             source_path = os.path.abspath(node_inputs["source_path"])
-            target_path = os.path.abspath(node_inputs["target_path"])
+            target_dir = os.path.abspath(node_inputs["target_dir"])
             is_cut = node_inputs.get("is_cut", False)
             
-            workflow_logger.info(f"{'Moving' if is_cut else 'Copying'} from {source_path} to {target_path}")
+            workflow_logger.info(f"{'Moving' if is_cut else 'Copying'} from {source_path} to {target_dir}")
 
             # Check if source exists
             if not os.path.exists(source_path):
@@ -59,7 +61,11 @@ class CopyFileNode(Node):
                 return {"success": False, "error_message": error_msg}
 
             # Create target directory if it doesn't exist
-            os.makedirs(os.path.dirname(target_path), exist_ok=True)
+            os.makedirs(target_dir, exist_ok=True)
+
+            # Get the source file/directory name
+            source_name = os.path.basename(source_path)
+            target_path = os.path.join(target_dir, source_name)
 
             # Copy operation
             try:

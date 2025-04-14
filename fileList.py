@@ -18,7 +18,8 @@ class FileListNode(Node):
             "label": "Directory Path",
             "description": "Path of the directory to scan",
             "type": "STRING",
-            "required": True
+            "required": True,
+            "widget": "DIR"
         },
         "recursive": {
             "label": "Include Subdirectories",
@@ -134,7 +135,8 @@ Return format:
             "label": "Directory Path",
             "description": "Path of the directory to scan",
             "type": "STRING",
-            "required": True
+            "required": True,
+            "widget": "DIR"
         },
         "include_dirs": {
             "label": "Include Directories",
@@ -244,7 +246,8 @@ Return format for each yield:
             "label": "Directory Path",
             "description": "Path of the directory to scan",
             "type": "STRING",
-            "required": True
+            "required": True,
+            "widget": "DIR"
         },
         "include_dirs": {
             "label": "Include Directories",
